@@ -10,4 +10,4 @@ COPY src/ .
 
 EXPOSE 3000
 
-CMD ["node", "server"]
+CMD ["node", "index"]
