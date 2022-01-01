@@ -3,11 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const fs = require('fs');
 const path = require('path');
 const rfs = require('rotating-file-stream'); // version 2.x
-const winston = require('winston');
-const mongoose = require('mongoose')
 const logger = require("./config/logger").logger;
 require('dotenv').config()
 
@@ -32,17 +29,10 @@ var accessLogStream = rfs.createStream('access.log', {
 // setup the logger
 app.use(morgan('combined', { stream: accessLogStream }))
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true})
-    .then(() => logger.info("MongoDB Connected"))
-  .catch(err => console.error(err));
-
-
 // add prefix to routes
 const router = express.Router();
 const routes = require('./routes')(router, {});
-app.use('/auth', routes);
+app.use('/', routes);
 
 app.listen(process.env.PORT, () => {
     logger.info(`listening on port ${process.env.PORT}`);
