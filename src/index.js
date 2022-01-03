@@ -32,7 +32,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 // add prefix to routes
 const router = express.Router();
 const routes = require('./routes')(router, {});
-app.use('/', routes);
+app.use('/hello/', routes);
 
 app.listen(process.env.PORT, () => {
     logger.info(`listening on port ${process.env.PORT}`);
